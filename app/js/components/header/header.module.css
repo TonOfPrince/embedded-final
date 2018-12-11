@@ -1,0 +1,24 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    font-size: 4em;
+    cursor: pointer;
+}
+
+.tagline {
+    font-size: 1.2em;
+    font-family: cursive;
+}
+
+.topics {
+    display: flex;
+    justify-content: space-between;
+    width: 56rem;
+    margin: 1rem 0;
+    border-top: 3px solid black;
+    padding-top: .5rem;
+}

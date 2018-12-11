@@ -1,0 +1,8 @@
+env: flex
+runtime: nodejs
+env_variables:
+  SQL_USER: postgres
+  SQL_PASSWORD: thb6K0NkqgNEjJEE
+  SQL_DATABASE: fakeness-prod
+  # e.g. my-awesome-project:us-central1:my-cloud-sql-instance
+  INSTANCE_CONNECTION_NAME: fakeness-199217:us-east1:myinstance

@@ -1,0 +1,46 @@
+{
+  "name": "Fakeness",
+  "version": "1.0.0",
+  "description": "Embedded Hub",
+  "main": "server.js",
+  "scripts": {
+    "bundle": "webpack --config webpack.config.js",
+    "prestart": "npm run bundle",
+    "start": "node server.js"
+  },
+  "engines": {
+    "npm": "6.5.0",
+    "node": "9.8.0"
+  },
+  "repository": "",
+  "author": "Brett Leibowitz",
+  "license": "proprietary",
+  "dependencies": {
+    "babel-preset-react": "7.0.0-beta.3",
+    "babelify": "10.0.0",
+    "express": "4.16.4",
+    "lodash": "4.17.11",
+    "mobx": "5.7.0",
+    "mobx-react": "5.4.2",
+    "mobx-react-matchmedia": "1.6.0",
+    "mobx-react-router": "4.0.5",
+    "moment": "2.22.2",
+    "path": "0.12.7",
+    "react": "16.6.3",
+    "react-dom": "16.6.3",
+    "react-router": "4.3.1",
+    "whatwg-fetch": "3.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.2.0",
+    "@babel/preset-env": "7.2.0",
+    "babel-loader": "8.0.4",
+    "css-loader": "2.0.0",
+    "file-loader": "2.0.0",
+    "react-router-dom": "4.3.1",
+    "style-loader": "0.23.1",
+    "url-loader": "1.1.2",
+    "webpack": "4.27.1",
+    "webpack-cli": "3.1.2"
+  }
+}

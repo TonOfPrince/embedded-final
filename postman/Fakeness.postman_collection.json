@@ -1,0 +1,161 @@
+{
+	"info": {
+		"name": "Fakeness",
+		"_postman_id": "44b2f82b-da62-4cfc-ab70-38fa4b75a76c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get trends",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "post article",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Twitter is all bots!",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "img",
+							"value": "https://dev.to/benhayehudi/how-i-created-two-twitter-bots-a97",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "intro",
+							"value": "Conclusions are out that Twitter is 98% bots! This is huge news.",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "topic",
+							"value": "Technology",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/articles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"articles"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "update article",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Twitter is all bots!",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "img",
+							"value": "https://dev.to/benhayehudi/how-i-created-two-twitter-bots-a97",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "intro",
+							"value": "Conclusions are out that Twitter is 98% bots! This is huge news.",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "topic",
+							"value": "Technology",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/articles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"articles"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get article",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:4000/api/articles/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"articles",
+						"1"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
