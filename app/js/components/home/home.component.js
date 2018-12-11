@@ -17,6 +17,20 @@ const Home = ({routingStore, stocksStore}) => <div>
             onKeyPress={e => stocksStore.handleKeyPress(e)}
         />
     </div>
+    <div>
+    {
+        _.map(stocksStore.stocks, ({symbol, companyName, latestPrice, change, changePercent}) => {
+            console.log({symbol, companyName, latestPrice, change, changePercent});
+            return <div>
+                <div>{symbol}</div>
+                <div>{companyName}</div>
+                <div>{latestPrice}</div>
+                <div>{change}</div>
+                <div>{changePercent}</div>
+            </div>;
+        })
+    }
+    </div>
 
 </div>;
 

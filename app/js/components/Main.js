@@ -26,6 +26,8 @@ let photosStore = new PhotosStore({routingStore});
 let stocksStore = new StocksStore({routingStore});
 let weatherStore = new WeatherStore({routingStore});
 
+stocksStore.getStocks();
+
 let stores = {
     photosStore,
     routingStore,
