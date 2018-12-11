@@ -7,7 +7,7 @@ export class WeatherStore {
         extendObservable(this, {
             city: "",
             temperature: "",
-            currentArticle: new Article(),
+            // currentArticle: new Article(),
             isLoading: false,
             getWeather: action('get weather', id => {
                 this.isLoading = true;

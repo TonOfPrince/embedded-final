@@ -22,8 +22,7 @@ export class StocksStore {
     constructor({routingStore}) {
         extendObservable(this, {
             stocks: [],
-            temperature: "",
-            currentArticle: new Article(),
+            newSymbol: "",
             isLoading: false,
             getStocks: action('get stocks', () => {
                 this.isLoading = true;
@@ -35,13 +34,19 @@ export class StocksStore {
                     });
             }),
             addStock: action('add stock', stock => {
-                return postData('/api/add_stock', {stock})
+                return postData(`/api/stock/${stock}`)
+                    .then(resp => this.newSymbol = "");
+            }),
+            removeStock: action('remove stock', stock => {
+                return deleteData('/api/stock', {stock})
                     .then(resp => {});
             }),
-            removeStock: remove('remove stock', stock => {
-                return postData('/api/remove_stock', {stock})
-                    .then(resp => {});
-            }),
+            setNewSymbol: action('set new symbol', symbol => {this.newSymbol = symbol}),
+            handleKeyPress: action ('handle key press', e => {
+                if (e.key === 'Enter') {
+                    this.addStock(this.newSymbol);
+                }
+            })
 
         });
     }

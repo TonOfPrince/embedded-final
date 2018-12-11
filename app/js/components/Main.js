@@ -12,7 +12,9 @@ import {breakpoints} from '../stores/breakpoints';
 import {HeaderView} from './header/header.component';
 import {HomeView} from './home/home.component';
 import {ArticleView} from './article/article.component';
-import {ArticlesStore} from '../stores/articles';
+import {PhotosStore} from '../stores/photos';
+import {StocksStore} from '../stores/stocks';
+import {WeatherStore} from '../stores/weather';
 import {MatchMediaProvider} from 'mobx-react-matchmedia';
 import {RouterStore, syncHistoryWithStore} from 'mobx-react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
@@ -20,12 +22,15 @@ import createBrowserHistory from 'history/createBrowserHistory';
 const browserHistory = createBrowserHistory();
 const routingStore = new RouterStore();
 
-let articlesStore = new ArticlesStore({routingStore});
-articlesStore.getArticles()
+let photosStore = new PhotosStore({routingStore});
+let stocksStore = new StocksStore({routingStore});
+let weatherStore = new WeatherStore({routingStore});
 
 let stores = {
+    photosStore,
     routingStore,
-    articlesStore,
+    stocksStore,
+    weatherStore,
 };
 
 const history = syncHistoryWithStore(browserHistory, routingStore);
