@@ -5,14 +5,11 @@ import moment from 'moment';
 export class Stock {
     constructor(stock) {
         extendObservable(this, {
-            price: _.get(stock, 'iexRealtimePrice', ''),
             symbol: _.get(stock, 'symbol', ''),
             companyName: _.get(stock, 'companyName', ''),
-            // intro: _.get(stock, 'intro', ''),
-            // setTitle: action('set title', title => this.title = title),
-            // setImage: action('set img', img => this.img = img),
-            // setIntro: action('set intro', intro => this.intro = intro),
-            // setTopic: action('set topic', topic => this.topic = topic),
+            latestPrice: _.get(stock, 'latestPrice', ''),
+            change: _.get(stock, 'change', ''),
+            changePercent: _.get(stock, 'changePercent', ''),
         });
     }
 }
@@ -28,13 +25,13 @@ export class StocksStore {
                 this.isLoading = true;
                 return fetchData(`/api/stocks`)
                     .then(stocks => {
-                        _.foreach(stocks, stock => {
-                            stocks.push(new Stock(stock));
+                        _.forEach(stocks, stock => {
+                            this.stocks.push(new Stock(stock));
                         });
                     });
             }),
             addStock: action('add stock', stock => {
-                return postData(`/api/stock/${stock}`)
+                return postData(`/api/stock/${_.toUpper(stock)}`)
                     .then(resp => this.newSymbol = "");
             }),
             removeStock: action('remove stock', stock => {
