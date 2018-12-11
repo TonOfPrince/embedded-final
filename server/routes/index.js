@@ -7,9 +7,15 @@ module.exports = app => {
         message: 'Welcome to the Hub API!',
     }));
 
-    // app.post('/api/articles', articlesController.create);
-    // app.get('/api/articles', articlesController.list);
-    // app.get('/api/articles/:articleid', articlesController.retrieve);
-    // app.put('/api/articles/:articleid', articlesController.update);
-    // app.delete('/api/articles/:articleid', articlesController.destroy);
+    //stocks
+    app.get('/api/stocks', stocksController.getStocksInfo);
+    app.get('/api/stock/:symbol', stocksController.getStockInfo);
+    app.post('/api/stock/:symbol', stocksController.addStock)
+    app.delete('/api/stock/:symbol', stocksController.removeStock)
+    
+    //weather
+
+    //photos
+    
+
 };

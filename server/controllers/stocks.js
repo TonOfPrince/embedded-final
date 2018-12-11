@@ -1,27 +1,61 @@
+const https = require('https');
+const _ = require('lodash');
+
+let stocks = [];
+
 module.exports = {
-    // create(req, res) {
-    //     pool.query(`INSERT INTO articles (title, img, topic, intro) VALUES ($1, $2, $3, $4) RETURNING *;`, [req.body.title, req.body.img, req.body.topic, req.body.intro])
-    //         .then((article) => res.status(201).send(article.rows[0]))
-    //         .catch(error => res.status(400).send(error));
-    // },
-    // list(req, res) {
-    //     pool.query(`SELECT * FROM articles ORDER BY articleid DESC;`)
-    //         .then(articles => res.status(201).send(articles.rows))
-    //         .catch(error => res.status(400).send(error));
-    // },
-    // retrieve(req, res) {
-    //     pool.query(`SELECT * FROM articles WHERE articleid = ($1);`, [req.params.articleid])
-    //         .then(article => res.status(201).send(article.rows[0]))
-    //         .catch(error => res.status(400).send(error));
-    // },
-    // update(req, res) {
-    //     pool.query(`UPDATE articles SET img = ($1) WHERE articleid = ($2);`, [req.body.img, req.params.articleid])
-    //         .then(article => res.status(201).send(article))
-    //         .catch(error => res.status(400).send(error));
-    // },
-    // destroy(req, res) {
-    //     pool.query(`DELETE FROM articles WHERE articleid = ($1);`, [req.params.articleid])
-    //         .then(list => res.status(201).send(list))
-    //         .catch(error => res.status(400).send(error));
-    // },
+    list(req, res) {
+        return stocks;
+    },
+    getStocksInfo(req, res) {
+        // https.get(`https://api.iextrading.com/1.0/stock/${req.params.articleid}/quote`, resp => {
+        let symbols = _.reduce(stocks, stock => `${stock},`, '');
+        https.get(`https://api.iextrading.com/1.0/stock/market/batch?${symbols}&types=quote`, resp => {
+            let data = '';
+
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                console.log(JSON.parse(data));
+                res.status(201).send(data);
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+            res.status(400).send(err.message)
+        });
+    },
+    getStockInfo(req, res) {
+        https.get(`https://api.iextrading.com/1.0/stock/${req.params.articleid}/quote`, resp => {
+            let data = '';
+
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                console.log(JSON.parse(data));
+                res.status(201).send(data);
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+            res.status(400).send(err.message)
+        });
+    },
+    addStock(req, res) {
+        stocks.push(req.params.symbol);
+        _.uniq(stocks);
+        res.status(201).send(stocks);
+    },
+    removeStock(req, res) {
+        _.remove(stocks, req.params.symbol);
+        res.status(201).send(stocks);
+    },
 };

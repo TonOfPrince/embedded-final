@@ -4,10 +4,20 @@ import {action, extendObservable} from 'mobx';
 import _ from 'lodash';
 import styles from './home.module.css';
 
-const Home = ({routingStore}) => <div>
+const Home = ({routingStore, stocksStore}) => <div>
     <div>PHOTOS</div>
     <div>WEATHER</div>
-    <div>STOCKS</div>
+    <div>
+        <div>STOCKS</div>
+        <input
+            placeholder = "symbol"
+            value = {stocksStore.newSymbol}
+            className = {styles.input}
+            onChange = {e => stocksStore.setNewSymbol(e.target.value)}
+            onKeyPress={e => stocksStore.handleKeyPress(e)}
+        />
+    </div>
+
 </div>;
 
-export const HomeView = inject('routingStore')(observer(Home));
+export const HomeView = inject('routingStore', 'stocksStore')(observer(Home));

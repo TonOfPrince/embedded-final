@@ -32,3 +32,15 @@ export const postData = (url, data) => {
     }).then(response => response.json())
         .catch(err => console.log(err));
 }
+
+export const deleteData = (url, data) => {
+    return fetch(url, {
+        method: 'DELETE',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.tokenToStretch}`,
+        },
+    }).then(response => response.json())
+        .catch(err => console.log(err));
+}
