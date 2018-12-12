@@ -7,7 +7,7 @@ export class PhotosStore {
         extendObservable(this, {
             city: "",
             temperature: "",
-            // currentArticle: new Article(),
+            file: "",
             isLoading: false,
             getWeather: action('get weather', id => {
                 this.isLoading = true;
@@ -21,6 +21,21 @@ export class PhotosStore {
                     city: this.city.title,
                 })
                     .then(city => {});
+            }),
+            addFile: action('add file', e => {
+                this.file = e.target.files[0];
+            }),
+            uploadFile: action('upload file', e => {
+                const data = new FormData();
+                data.append('file', this.file);
+                data.append('filename', "test");
+
+                fetch('/api/photo', {
+                  method: 'POST',
+                  body: data,
+                }).then((response) => {
+
+                });
             }),
         });
     }
