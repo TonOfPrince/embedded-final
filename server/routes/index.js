@@ -18,5 +18,7 @@ module.exports = app => {
 
     //photos
     app.post('/api/photo', photosController.upload);
-
+    app.get('/api/photos', photosController.getList);
+    app.get('/api/photo/:file', photosController.getFile);
+    app.delete('/api/photo/:file', photosController.removeFile);
 };
