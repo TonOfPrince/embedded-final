@@ -32,7 +32,12 @@ export class StocksStore {
             }),
             addStock: action('add stock', stock => {
                 return postData(`/api/stock/${_.toUpper(stock)}`)
-                    .then(resp => this.newSymbol = "");
+                    .then(resp => {
+                        if (_.has(resp, "symbol")) {
+                            this.stocks.push(new Stock(resp));
+                        }
+                        this.newSymbol = ""
+                    });
             }),
             removeStock: action('remove stock', stock => {
                 return deleteData('/api/stock', {stock})
