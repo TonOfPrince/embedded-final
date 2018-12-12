@@ -1,27 +1,42 @@
+const https = require('https');
+const _ = require('lodash');
+
+let city = "";
+
+let getWeather = (req, res) => {
+    city = req.query.city || city;
+    console.log(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=06a202740b673007edb9c05b90369560`);
+    https.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=06a202740b673007edb9c05b90369560&units=imperial`, resp => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            console.log(data);
+            let parsed = JSON.parse(data);
+            if (parsed.cod == 404) {
+                res.status(400).send({err: parsed.message});
+            } else {
+                res.status(201).send({
+                    temp: _.toInteger(_.get(parsed, "main.temp", "")),
+                    tempMax: _.toInteger(_.get(parsed, "main.temp_max", "")),
+                    tempMin: _.toInteger(_.get(parsed, "main.temp_min", "")),
+                    description: _.get(parsed, "weather[0].description", ""),
+                    city: _.get(parsed, "name", ""),
+                });
+            }
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+        res.status(400).send(err.message)
+    });
+};
+
 module.exports = {
-    // create(req, res) {
-    //     pool.query(`INSERT INTO articles (title, img, topic, intro) VALUES ($1, $2, $3, $4) RETURNING *;`, [req.body.title, req.body.img, req.body.topic, req.body.intro])
-    //         .then((article) => res.status(201).send(article.rows[0]))
-    //         .catch(error => res.status(400).send(error));
-    // },
-    // list(req, res) {
-    //     pool.query(`SELECT * FROM articles ORDER BY articleid DESC;`)
-    //         .then(articles => res.status(201).send(articles.rows))
-    //         .catch(error => res.status(400).send(error));
-    // },
-    // retrieve(req, res) {
-    //     pool.query(`SELECT * FROM articles WHERE articleid = ($1);`, [req.params.articleid])
-    //         .then(article => res.status(201).send(article.rows[0]))
-    //         .catch(error => res.status(400).send(error));
-    // },
-    // update(req, res) {
-    //     pool.query(`UPDATE articles SET img = ($1) WHERE articleid = ($2);`, [req.body.img, req.params.articleid])
-    //         .then(article => res.status(201).send(article))
-    //         .catch(error => res.status(400).send(error));
-    // },
-    // destroy(req, res) {
-    //     pool.query(`DELETE FROM articles WHERE articleid = ($1);`, [req.params.articleid])
-    //         .then(list => res.status(201).send(list))
-    //         .catch(error => res.status(400).send(error));
-    // },
+    getWeather,
 };

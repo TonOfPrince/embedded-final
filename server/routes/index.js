@@ -14,6 +14,7 @@ module.exports = app => {
     app.delete('/api/stock/:symbol', stocksController.removeStock)
     
     //weather
+    app.get('/api/weather', weatherController.getWeather);
 
     //photos
     app.post('/api/photo', photosController.upload);
