@@ -1,5 +1,5 @@
 import { computed, action, extendObservable } from 'mobx';
-import {fetchData, postData} from '../utils/fetch';
+import {fetchData, postData, deleteData} from '../utils/fetch';
 import moment from 'moment';
 
 export class Stock {
@@ -10,6 +10,7 @@ export class Stock {
             latestPrice: _.get(stock, 'latestPrice', ''),
             change: _.get(stock, 'change', ''),
             changePercent: _.get(stock, 'changePercent', ''),
+            pos: _.get(stock, 'pos', true),
         });
     }
 }
@@ -20,6 +21,7 @@ export class StocksStore {
         extendObservable(this, {
             stocks: [],
             newSymbol: "",
+            err: "",
             isLoading: false,
             getStocks: action('get stocks', () => {
                 this.isLoading = true;
@@ -31,17 +33,22 @@ export class StocksStore {
                     });
             }),
             addStock: action('add stock', stock => {
-                return postData(`/api/stock/${_.toUpper(stock)}`)
-                    .then(resp => {
-                        if (_.has(resp, "symbol")) {
-                            this.stocks.push(new Stock(resp));
-                        }
-                        this.newSymbol = ""
-                    });
+                if (this.stocks.length >= 5) {
+                    this.err = "You have reached your limit of 5 stocks.";
+                } else {
+                    return postData(`/api/stock/${_.toUpper(stock)}`)
+                        .then(resp => {
+                            if (_.has(resp, "symbol")) {
+                                this.stocks.push(new Stock(resp));
+                            }
+                            this.newSymbol = "";
+                            this.err = "";
+                        });
+                }
             }),
             removeStock: action('remove stock', stock => {
-                return deleteData('/api/stock', {stock})
-                    .then(resp => {});
+                return deleteData(`/api/stock/${ _.toUpper(stock)}`)
+                    .then(stocks => this.stocks = stocks);
             }),
             setNewSymbol: action('set new symbol', symbol => {this.newSymbol = symbol}),
             handleKeyPress: action ('handle key press', e => {

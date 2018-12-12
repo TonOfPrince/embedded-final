@@ -11,7 +11,6 @@ import {Provider} from 'mobx-react';
 import {breakpoints} from '../stores/breakpoints';
 import {HeaderView} from './header/header.component';
 import {HomeView} from './home/home.component';
-import {ArticleView} from './article/article.component';
 import {PhotosStore} from '../stores/photos';
 import {StocksStore} from '../stores/stocks';
 import {WeatherStore} from '../stores/weather';

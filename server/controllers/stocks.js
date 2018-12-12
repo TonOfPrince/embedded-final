@@ -24,18 +24,20 @@ let getStocksInfo = (req, res) =>{
             resp.on('end', () => {
                 console.log(JSON.parse(data));
                 let parsed = JSON.parse(data);
-                let retArr = [];
+                // let retArr = [];
                 _.forIn(parsed, (val, key) => {
-                    retArr.push({
+                    console.log(_.get(val, 'quote.change[0]', ''));
+                    stocks.push({
                         symbol: _.get(val, 'quote.symbol', ''),
                         companyName: _.get(val, 'quote.companyName', ''),
-                        latestPrice: _.get(val, 'quote.latestPrice', ''),
-                        change: _.get(val, 'quote.change', ''),
-                        changePercent: _.get(val, 'quote.changePercent', ''),
+                        latestPrice: "$" + _.get(val, 'quote.latestPrice', ''),
+                        change: '$' + _.get(val, 'quote.change', ''),
+                        changePercent: _.round(_.get(val, 'quote.changePercent', '')) + '%',
+                        pos: _.get(val, 'quote.change[0]', '') !== '-',
                     });
                 });
 
-                res.status(201).send(JSON.stringify(retArr));
+                res.status(201).send(JSON.stringify(stocks));
             });
 
         }).on("error", (err) => {
@@ -59,7 +61,17 @@ let getStockInfo = (req, res) => {
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
             console.log(data);
-            res.status(201).send(data);
+            let parsed = JSON.parse(data);
+            let obj = {
+                symbol: _.get(parsed, 'symbol', ''),
+                companyName: _.get(parsed, 'companyName', ''),
+                latestPrice: "$" + _.get(parsed, 'latestPrice', ''),
+                change: '$' + _.get(parsed, 'change', ''),
+                changePercent: _.round(_.get(parsed, 'changePercent', ''), 3) + '%',
+                pos: +_.get(parsed, 'change', '') > 0,
+            }
+            stocks.push(obj);
+            res.status(201).send(obj);
         });
 
     }).on("error", (err) => {
@@ -68,17 +80,15 @@ let getStockInfo = (req, res) => {
     });
 };
 let addStock = (req, res) =>{
-    let symbol = _.find(stocks, stock => stock == req.params.symbol);
+    let symbol = _.find(stocks, ({symbol}) => symbol == req.params.symbol);
     if (symbol) {
         res.status(201).send(JSON.stringify({}));
     } else {
-        stocks.push(req.params.symbol);
-        console.log('batch');
         getStockInfo(req, res);
     }
 };
 let removeStock = (req, res) => {
-    _.remove(stocks, req.params.symbol);
+    _.remove(stocks, ({symbol}) => symbol == req.params.symbol);
     res.status(201).send(stocks);
 };
 module.exports = {

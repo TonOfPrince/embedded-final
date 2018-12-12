@@ -6,11 +6,12 @@ export class WeatherStore {
     constructor({routingStore}) {
         extendObservable(this, {
             city: "",
+            description: "",
             newCity: "",
             temp: "",
             high: "",
             low: "",
-            error: "",
+            err: "",
             // currentArticle: new Article(),
             isLoading: false,
             getWeather: action('get weather', id => {
@@ -18,14 +19,14 @@ export class WeatherStore {
                 return fetchData(`/api/weather`, {city: this.newCity})
                     .then(data => {
                         if (data.err) {
-                            this.error = data.err;
+                            this.err = data.err;
                         } else {
                             this.city = data.city;
                             this.temp = data.temp;
                             this.high = data.tempMax;
                             this.low = data.tempMin;
                             this.description = _.capitalize(data.description);
-                            this.error = "";
+                            this.err = "";
                         }
                     });
             }),

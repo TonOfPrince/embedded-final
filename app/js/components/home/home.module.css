@@ -1,0 +1,93 @@
+.home {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 2rem;
+}
+    
+    .title {
+        font-size: 3em;
+    }
+
+    .err {
+        color: red;
+        margin: 1rem 0;
+    }
+
+    .photos {
+        border-right: 1px solid black;
+        padding-right: 3rem;
+    }
+        .upload {
+            background: #243cb7;
+            width: 5rem;
+            color: white;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .list {
+
+        }
+
+        .photo {
+            margin-bottom: 2rem;
+        }
+        .img {
+
+        }
+        .name {
+            display: flex;
+        }
+            .remove {
+                margin-right: .5rem;
+                color: red;
+                cursor: pointer;
+            }
+
+    .weather {
+        border-right: 1px solid black;
+        padding: 0 3rem;
+    }
+
+        .city {
+            font-size: 2em;
+            margin-top: 1rem;
+        }
+
+        .description {
+
+        }
+
+        .temp {
+            font-size: 2em;
+            margin-top: 1rem;
+        }
+
+        .low {
+            margin-top: 1rem;
+        }
+
+        .high {
+            margin-bottom: 1rem;
+        }
+
+    .stocks {
+        padding-left: 3rem;
+    }
+        .stock {
+            display: flex;
+            margin-top: 1rem;
+        }
+        .stockInfo {
+        }
+
+        .pos {
+            color: green;
+        }
+
+        .neg {
+            color: red;
+        }
