@@ -4,14 +4,28 @@ import {action, extendObservable} from 'mobx';
 import _ from 'lodash';
 import styles from './home.module.css';
 
-const Home = ({routingStore, stocksStore, photosStore}) => <div>
+const Home = ({routingStore, stocksStore, photosStore, weatherStore}) => <div>
     <div>
         <div>PHOTOS</div>
         <input type="file" name="myImage" onChange= {photosStore.addFile} />
         <div onClick = {photosStore.uploadFile}>UPLOAD</div>
         <img className = {styles.fakeOutBlank} src = '../../../../photos/purple.bmp' />
     </div>
-    <div>WEATHER</div>
+    <div>
+        <div>WEATHER</div>
+        <input
+            placeholder = "city"
+            value = {weatherStore.newCity}
+            className = {styles.input}
+            onChange = {e => weatherStore.setNewCity(e.target.value)}
+            onKeyPress={e => weatherStore.handleKeyPress(e)}
+        />
+        {weatherStore.city ? <div>City: {weatherStore.city}</div> : ""}
+        {weatherStore.city && weatherStore.temp ? <div>Temperature: {weatherStore.temp}</div> : ""}
+        {weatherStore.city && weatherStore.high ? <div>High: {weatherStore.high}</div> : ""}
+        {weatherStore.city && weatherStore.low ? <div>Low: {weatherStore.low}</div> : ""}
+        {weatherStore.city && weatherStore.description ? <div>Description: {weatherStore.description}</div> : ""}
+    </div>
     <div>
         <div>STOCKS</div>
         <input
@@ -38,4 +52,4 @@ const Home = ({routingStore, stocksStore, photosStore}) => <div>
 
 </div>;
 
-export const HomeView = inject('routingStore', 'stocksStore', 'photosStore')(observer(Home));
+export const HomeView = inject('routingStore', 'stocksStore', 'photosStore', 'weatherStore')(observer(Home));

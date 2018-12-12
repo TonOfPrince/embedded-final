@@ -48,7 +48,7 @@ export class StocksStore {
                 if (e.key === 'Enter') {
                     this.addStock(this.newSymbol);
                 }
-            })
+            }),
 
         });
     }
