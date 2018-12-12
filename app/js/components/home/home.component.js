@@ -5,9 +5,12 @@ import _ from 'lodash';
 import styles from './home.module.css';
 
 const Home = ({routingStore, stocksStore, photosStore}) => <div>
-    <div>PHOTOS</div>
+    <div>
+        <div>PHOTOS</div>
         <input type="file" name="myImage" onChange= {photosStore.addFile} />
         <div onClick = {photosStore.uploadFile}>UPLOAD</div>
+        <img className = {styles.fakeOutBlank} src = '../../../../photos/purple.bmp' />
+    </div>
     <div>WEATHER</div>
     <div>
         <div>STOCKS</div>
