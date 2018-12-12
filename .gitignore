@@ -2,3 +2,4 @@ npm-debug.log
 node_modules/
 dist/*.js
 dist/*.js.map
+photos/
