@@ -38,17 +38,29 @@ export class StocksStore {
                 } else {
                     return postData(`/api/stock/${_.toUpper(stock)}`)
                         .then(resp => {
-                            if (_.has(resp, "symbol")) {
+                            console.log(resp);
+                            if (_.has(resp, "err")) {
+                                this.err = resp.err;
+                            } else if (_.has(resp, "symbol")) {
                                 this.stocks.push(new Stock(resp));
+                                this.newSymbol = "";
+                                this.err = "";
                             }
-                            this.newSymbol = "";
-                            this.err = "";
+                        })
+                        .catch(({err}) => {
+                            this.err = err;
+                            console.log(err);
                         });
                 }
             }),
             removeStock: action('remove stock', stock => {
                 return deleteData(`/api/stock/${ _.toUpper(stock)}`)
-                    .then(stocks => this.stocks = stocks);
+                    .then(stocks => {
+                        this.stocks = stocks
+                        this.err = "";
+
+                    })
+                    .catch(({err}) => this.err = err);
             }),
             setNewSymbol: action('set new symbol', symbol => {this.newSymbol = symbol}),
             handleKeyPress: action ('handle key press', e => {

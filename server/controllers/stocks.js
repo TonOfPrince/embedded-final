@@ -60,18 +60,22 @@ let getStockInfo = (req, res) => {
 
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
-            console.log(data);
-            let parsed = JSON.parse(data);
-            let obj = {
-                symbol: _.get(parsed, 'symbol', ''),
-                companyName: _.get(parsed, 'companyName', ''),
-                latestPrice: "$" + _.get(parsed, 'latestPrice', ''),
-                change: '$' + _.get(parsed, 'change', ''),
-                changePercent: _.round(_.get(parsed, 'changePercent', ''), 3) + '%',
-                pos: +_.get(parsed, 'change', '') > 0,
+            if (data == "Unknown symbol") {
+                res.status(400).send({err: "Not a recognized sotck symbol."});
+
+            } else {
+                let parsed = JSON.parse(data);
+                let obj = {
+                    symbol: _.get(parsed, 'symbol', ''),
+                    companyName: _.get(parsed, 'companyName', ''),
+                    latestPrice: "$" + _.get(parsed, 'latestPrice', ''),
+                    change: '$' + _.get(parsed, 'change', ''),
+                    changePercent: _.round(_.get(parsed, 'changePercent', ''), 3) + '%',
+                    pos: +_.get(parsed, 'change', '') > 0,
+                }
+                stocks.push(obj);
+                res.status(201).send(obj);
             }
-            stocks.push(obj);
-            res.status(201).send(obj);
         });
 
     }).on("error", (err) => {
@@ -82,7 +86,7 @@ let getStockInfo = (req, res) => {
 let addStock = (req, res) =>{
     let symbol = _.find(stocks, ({symbol}) => symbol == req.params.symbol);
     if (symbol) {
-        res.status(201).send(JSON.stringify({}));
+        res.status(400).send({err: "Stock already being watched."});
     } else {
         getStockInfo(req, res);
     }
