@@ -4,8 +4,10 @@ import {action, extendObservable} from 'mobx';
 import _ from 'lodash';
 import styles from './home.module.css';
 
-const Home = ({routingStore, stocksStore}) => <div>
+const Home = ({routingStore, stocksStore, photosStore}) => <div>
     <div>PHOTOS</div>
+        <input type="file" name="myImage" onChange= {photosStore.addFile} />
+        <div onClick = {photosStore.uploadFile}>UPLOAD</div>
     <div>WEATHER</div>
     <div>
         <div>STOCKS</div>
@@ -33,4 +35,4 @@ const Home = ({routingStore, stocksStore}) => <div>
 
 </div>;
 
-export const HomeView = inject('routingStore', 'stocksStore')(observer(Home));
+export const HomeView = inject('routingStore', 'stocksStore', 'photosStore')(observer(Home));

@@ -16,6 +16,6 @@ module.exports = app => {
     //weather
 
     //photos
-    
+    app.post('/api/photo', photosController.upload);
 
 };
