@@ -9,7 +9,9 @@ const Home = ({routingStore, stocksStore, photosStore, weatherStore}) => <div>
         <div>PHOTOS</div>
         <input type="file" name="myImage" onChange= {photosStore.addFile} />
         <div onClick = {photosStore.uploadFile}>UPLOAD</div>
-        <img className = {styles.fakeOutBlank} src = '../../../../photos/purple.bmp' />
+        {
+            _.map(photosStore.photos, photo => <img className = {styles.fakeOutBlank} src = {`../../../../photos/${photo}`} />)
+        }
     </div>
     <div>
         <div>WEATHER</div>

@@ -5,8 +5,7 @@ import moment from 'moment';
 export class PhotosStore {
     constructor({routingStore}) {
         extendObservable(this, {
-            city: "",
-            temperature: "",
+            photos: [],
             file: "",
             isLoading: false,
             getWeather: action('get weather', id => {
@@ -33,10 +32,19 @@ export class PhotosStore {
                 fetch('/api/photo', {
                   method: 'POST',
                   body: data,
-                }).then((response) => {
-
-                });
+                }).then(response => response.json())
+                    .then(photos => {
+                        console.log(photos);
+                        this.photos = photos
+                    });
             }),
+            getPhotos: action("get photo list", () => {
+                fetchData('/api/photos')
+                    .then(photos => {
+                        this.photos = photos;
+                        console.log(photos);
+                    });
+            })
         });
     }
 }
