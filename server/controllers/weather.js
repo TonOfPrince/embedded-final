@@ -22,9 +22,12 @@ let getWeather = (req, res) => {
                 res.status(400).send({err: parsed.message});
             } else {
                 res.status(201).send({
-                    temp: _.toInteger(_.get(parsed, "main.temp", "")) + "°",
-                    tempMax: _.toInteger(_.get(parsed, "main.temp_max", "")) + "° ↑",
-                    tempMin: _.toInteger(_.get(parsed, "main.temp_min", "")) + "° ↓",
+                    // temp: _.toInteger(_.get(parsed, "main.temp", "")) + "°",
+                    // tempMax: _.toInteger(_.get(parsed, "main.temp_max", "")) + "° ↑",
+                    // tempMin: _.toInteger(_.get(parsed, "main.temp_min", "")) + "° ↓",
+                    temp: _.toInteger(_.get(parsed, "main.temp", "")),
+                    tempMax: _.toInteger(_.get(parsed, "main.temp_max", "")),
+                    tempMin: _.toInteger(_.get(parsed, "main.temp_min", "")),
                     description: _.get(parsed, "weather[0].description", ""),
                     city: _.get(parsed, "name", ""),
                 });
