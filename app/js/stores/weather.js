@@ -21,11 +21,11 @@ export class WeatherStore {
                         if (data.err) {
                             this.err = data.err;
                         } else {
-                            this.city = data.city;
-                            this.temp = data.temp;
-                            this.high = data.tempMax;
-                            this.low = data.tempMin;
-                            this.description = _.capitalize(data.description);
+                            this.city = _.get(data, '[0].city', '');
+                            this.temp = _.get(data, '[0].temp', '');
+                            this.high = _.get(data, '[0].tempMax', '');
+                            this.low = _.get(data, '[0].tempMin', '');
+                            this.description = _.capitalize(_.get(data, '[0].description', ''));
                             this.err = "";
                         }
                     });
