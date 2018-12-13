@@ -21,16 +21,13 @@ let getWeather = (req, res) => {
             if (parsed.cod == 404) {
                 res.status(400).send({err: parsed.message});
             } else {
-                res.status(201).send([{
-                    // temp: _.toInteger(_.get(parsed, "main.temp", "")) + "°",
-                    // tempMax: _.toInteger(_.get(parsed, "main.temp_max", "")) + "° ↑",
-                    // tempMin: _.toInteger(_.get(parsed, "main.temp_min", "")) + "° ↓",
-                    temp: _.toString(_.toInteger(_.get(parsed, "main.temp", ""))),
-                    tempMax: _.toString(_.toInteger(_.get(parsed, "main.temp_max", ""))),
-                    tempMin: _.toString(_.toInteger(_.get(parsed, "main.temp_min", ""))),
+                res.status(201).send(JSON.stringify({
+                    temp: _.toInteger(_.get(parsed, "main.temp", "")) + "°",
+                    tempMax: _.toInteger(_.get(parsed, "main.temp_max", "")) + "° ↑",
+                    tempMin: _.toInteger(_.get(parsed, "main.temp_min", "")) + "° ↓",
                     description: _.get(parsed, "weather[0].description", ""),
                     city: _.get(parsed, "name", ""),
-                }]);
+                }));
             }
         });
 
