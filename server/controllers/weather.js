@@ -21,7 +21,8 @@ let getWeather = (req, res) => {
             if (parsed.cod == 404) {
                 res.status(400).send({err: parsed.message});
             } else {
-                res.status(201).send(JSON.stringify([{
+                let weather = [];
+                weather.push({
                     // temp: _.toInteger(_.get(parsed, "main.temp", "")) + "°",
                     // tempMax: _.toInteger(_.get(parsed, "main.temp_max", "")) + "° ↑",
                     // tempMin: _.toInteger(_.get(parsed, "main.temp_min", "")) + "° ↓",
@@ -30,7 +31,8 @@ let getWeather = (req, res) => {
                     tempMin: _.toString(_.toInteger(_.get(parsed, "main.temp_min", ""))),
                     description: _.get(parsed, "weather[0].description", ""),
                     city: _.get(parsed, "name", ""),
-                }]));
+                })
+                res.status(201).send(JSON.stringify(weather));
             }
         });
 
