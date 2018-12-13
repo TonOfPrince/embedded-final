@@ -24,7 +24,7 @@ let getList = (req, res) => {
 }
 
 let getFile  = (req, res) => {
-    res.sendFile(path.join(__dirname, '../final', `./photos/${req.params.file}`))
+    res.sendFile(path.join(__dirname, '../../../final', `./photos/${req.params.file}`))
 }
 
 let removeFile = (req, res) => {
